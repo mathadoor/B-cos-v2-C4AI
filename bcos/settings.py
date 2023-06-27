@@ -4,7 +4,7 @@ General settings. Mainly paths to data.
 import os
 
 # data root (mainly for CIFAR10)
-DATA_ROOT = os.getenv("DATA_ROOT")
+DATA_ROOT = os.getenv("DATA_ROOT") or "B-cos-v2-C4AI/data"
 
 # ImageNet path
 IMAGENET_PATH = os.getenv("IMAGENET_PATH")
