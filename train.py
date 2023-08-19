@@ -39,7 +39,7 @@ def get_parser(add_help=True):
     parser.add_argument(
         "--force-no-resume",
         dest="resume",
-        default=True,  # so by default always resume (notice dest!)
+        default=False,  # so by default always resume (notice dest!)
         action="store_false",  # if given do not resume!
         help="Force restart/retrain experiment.",
     )
@@ -62,6 +62,18 @@ def get_parser(add_help=True):
         "--refresh_rate",
         type=int,
         help="Refresh rate for progress bar.",
+    )
+
+    parser.add_argument(
+        "--finetune",
+        type=bool,
+        default=True,
+    )
+
+    parser.add_argument(
+        "--finetune_layer",
+        type=list,
+        default=["layer2"],
     )
 
     # loggers

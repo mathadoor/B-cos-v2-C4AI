@@ -262,6 +262,21 @@ def run_training(args):
         base_network,
         experiment_name,
     )
+
+    if args.finetune:
+        # Get ImageNet Model
+        base_model = torch.hub.load('B-cos/B-cos-v2', "".join(experiment_name.split("_")), pretrained=True)
+        layers = [f"layer{i}" for i in range(1, 5)]
+        # Load layers from base_model into model with names not in args.finetune_layer
+        for layer in layers:
+            if layer not in args.finetune_layer:
+                model_layer = getattr(model.model, layer)
+                base_model_layer = getattr(base_model, layer)
+                model_layer.load_state_dict(base_model_layer.state_dict())
+                # Freeze layers
+                for param in model_layer.parameters():
+                    param.requires_grad = False
+
     rank_zero_info(f"Model: {repr(model.model)}")
 
     # jit the internal model if specified

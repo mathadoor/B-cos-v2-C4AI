@@ -2,9 +2,9 @@
 # the `bcos` package should be compatible with pytorch 2.0 though
 name: bcos
 channels:
+  - conda-forge
   - pytorch
   - nvidia
-  - conda-forge
 dependencies:
   - python=3.10
   - pytorch-lightning=1.8.1
