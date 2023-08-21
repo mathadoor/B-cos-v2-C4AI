@@ -286,3 +286,4 @@ cython_debug/
 
 # Data
 */data/*
+/experiments/*

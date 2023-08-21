@@ -18,6 +18,7 @@ from torchvision.datasets import CIFAR10, ImageFolder
 import bcos.settings as settings
 
 from .categories import CIFAR10_CATEGORIES, IMAGENET_CATEGORIES
+from datasets import load_dataset
 from .sampler import RASampler
 from .transforms import RandomCutmix, RandomMixup, SplitAndGrid
 
@@ -168,6 +169,27 @@ class ClassificationDataModule(pl.LightningDataModule):
             )
 
         return train_sampler
+
+
+class TinyImageNetDataModule(ClassificationDataModule):
+
+    NUM_CLASSES: int = 1000
+    NUM_TRAIN_EXAMPLES: int = 100_000
+    NUM_VAL_EXAMPLES: int = 10_000
+
+    CATEGORIES: List[str] = IMAGENET_CATEGORIES
+
+    def __init__(self, config):
+        super().__init__(config)
+
+    def setup(self, stage: str) -> None:
+        DATA_ROOT = settings.DATA_ROOT
+        hf_dataset = load_dataset("Maysee/tiny-imagenet")
+        if stage == "fit":
+            self.train_dataset = hf_dataset["train"]
+            assert len(self.train_dataset) == self.NUM_TRAIN_EXAMPLES
+
+        self.eval_dataset = hf_dataset["valid"]
 
 
 class ImageNetDataModule(ClassificationDataModule):

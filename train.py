@@ -73,7 +73,7 @@ def get_parser(add_help=True):
     parser.add_argument(
         "--finetune_layer",
         type=list,
-        default=["layer2"],
+        default=["layer4"],
     )
 
     # loggers

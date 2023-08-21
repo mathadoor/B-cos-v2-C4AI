@@ -7,7 +7,7 @@ import os
 DATA_ROOT = os.getenv("DATA_ROOT") or "B-cos-v2-C4AI/data"
 
 # ImageNet path
-IMAGENET_PATH = os.getenv("IMAGENET_PATH")
+IMAGENET_PATH = os.getenv("DATA_ROOT") or "B-cos-v2-C4AI/data"
 
 # ---------------------------------------------
 # Following are only needed for caching!!!
